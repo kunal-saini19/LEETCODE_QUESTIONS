@@ -15,7 +15,7 @@ public:
         //     end+=a;
         // }
         
-        int ans=end;
+        int ans=0;
         while(start<=end){
             int mid=start+(end-start)/2;
             if(cutieeKOKO(piles,mid,h)){
