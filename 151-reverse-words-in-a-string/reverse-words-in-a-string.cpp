@@ -12,11 +12,11 @@ public:
             if(word.length() != 0){
                 reverse(word.begin(),word.end());
                 // if()
-                 if (!ans.empty())
-                    ans += " ";
-                ans+=  word;
+                //  if (!ans.empty())
+                    // ans += " ";
+                ans+=  ' '+ word;
             }
         }
-        return ans;
+        return ans.substr(1);
     }
 };
