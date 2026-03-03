@@ -1,5 +1,5 @@
 
-        class Solution {
+   class Solution {
 public:
 
     bool isfresame(vector<int>& freq1, vector<int>& freq2){
