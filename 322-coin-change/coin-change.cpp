@@ -66,35 +66,85 @@
 //         return dp[amount];
 //     }
 // };
-class Solution {
+// class Solution {
+// public:
+
+    // int solve(vector<int>& coins, int sum, int i, vector<vector<int>>& dp){
+
+    //     if(sum == 0) return 0;
+
+    //     if(sum < 0 || i == coins.size()) return INT_MAX;
+
+    //     if(dp[i][sum] != -1) return dp[i][sum];
+
+    //     int take = solve(coins, sum - coins[i], i, dp);
+
+    //     if(take != INT_MAX) take = 1 + take;
+
+    //     int nottake = solve(coins, sum, i + 1, dp);
+
+    //     return dp[i][sum] = min(take, nottake);
+    // }
+
+    // int coinChange(vector<int>& coins, int amount) {
+
+    //     int n = coins.size();
+
+    //     vector<vector<int>> dp(n, vector<int>(amount + 1, -1));
+
+    //     int ans = solve(coins, amount, 0, dp);
+
+    //     if(ans == INT_MAX) return -1;
+
+    //     return ans;
+    class Solution {
 public:
 
-    int solve(vector<int>& coins, int sum, int i, vector<vector<int>>& dp){
+    int solve(vector<int>& coins, int i, int amount, vector<vector<int>>& dp)
+    {
+        // ---------- BASE CASE ----------
+        if(amount == 0)
+            return 0;
 
-        if(sum == 0) return 0;
+        if(i == 0)
+        {
+            if(amount % coins[0] == 0)
+                return amount / coins[0];
+            else
+                return INT_MAX;
+        }
 
-        if(sum < 0 || i == coins.size()) return INT_MAX;
+        // ---------- DP CHECK ----------
+        if(dp[i][amount] != -1)
+            return dp[i][amount];
 
-        if(dp[i][sum] != -1) return dp[i][sum];
+        // ---------- TAKE ----------
+        int take = INT_MAX;
 
-        int take = solve(coins, sum - coins[i], i, dp);
+        if(amount >= coins[i])
+        {
+            int res = solve(coins, i, amount - coins[i], dp);
 
-        if(take != INT_MAX) take = 1 + take;
+            if(res != INT_MAX)
+                take = 1 + res;
+        }
 
-        int nottake = solve(coins, sum, i + 1, dp);
+        // ---------- NOT TAKE ----------
+        int notTake = solve(coins, i-1, amount, dp);
 
-        return dp[i][sum] = min(take, nottake);
+        return dp[i][amount] = min(take, notTake);
     }
 
-    int coinChange(vector<int>& coins, int amount) {
-
+    int coinChange(vector<int>& coins, int amount)
+    {
         int n = coins.size();
 
-        vector<vector<int>> dp(n, vector<int>(amount + 1, -1));
+        vector<vector<int>> dp(n, vector<int>(amount+1, -1));
 
-        int ans = solve(coins, amount, 0, dp);
+        int ans = solve(coins, n-1, amount, dp);
 
-        if(ans == INT_MAX) return -1;
+        if(ans == INT_MAX)
+            return -1;
 
         return ans;
     }
