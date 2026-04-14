@@ -9,20 +9,26 @@
 class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        if(headA==NULL || headB==NULL) return NULL;
-        if(headA->next == NULL  && headB->next==NULL && headA->val ==headB->val)return headA;
-        unordered_set<ListNode*>st;
-        while(headA !=NULL){
-            st.insert(headA);
-            headA=headA->next;
+        if (headA == NULL || headB == NULL) return NULL;
+
+        unordered_map<ListNode*, bool> mp;
+
+        // store nodes of A
+        while (headA != NULL) {
+            mp[headA] = true;
+            headA = headA->next;
         }
-         while(headB!=NULL){
-            if(st.find(headB) !=st.end()){
+
+        // check nodes of B
+        while (headB != NULL) {
+            if (mp.find(headB) != mp.end()) {
                 return headB;
             }
-            headB=headB->next;;
+            headB = headB->next;
         }
-        return 0;
+
+        return NULL;
+
 
     }
 };
