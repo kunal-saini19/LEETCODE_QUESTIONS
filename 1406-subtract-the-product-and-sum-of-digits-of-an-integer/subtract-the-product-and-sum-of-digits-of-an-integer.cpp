@@ -4,7 +4,6 @@ public:
         int sum =0;
         int product=1;
         while(n>0){
-            int m=0;
             int number=n%10;
             sum +=number;
             product *=number;
