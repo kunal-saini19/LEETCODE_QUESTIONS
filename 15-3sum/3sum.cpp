@@ -4,37 +4,34 @@ public:
         vector<vector<int>>ans;
        
         sort(nums.begin(),nums.end());
+       for(int i=0;i<nums.size()-1;i++){
+        int k=i+1;
+        int j=nums.size()-1;
+        if (i > 0 && nums[i] == nums[i - 1]) continue;
 
-        for(int i=0;i<nums.size()-1;i++){
-            int str=i+1;
-            int end=nums.size()-1;
-             if (i > 0 && nums[i] == nums[i - 1]) continue;
-
-            while(str < end){
-                int sum=nums[i]+nums[str]+nums[end];
-                // int index=0;
-                if(sum==0){
-                    ans.push_back({nums[i],nums[str],nums[end]});
-                    // nums.push_back(nums[index][str]);
-                    // nums.push_back(nums[index][end]);
-                    
-
-                    str++;
-                    end--;
-                    while (str < end && nums[str] == nums[str - 1])
-                        str++;
-
-                    while (str < end && nums[end] == nums[end + 1])
-                        end--;
-                    
+        while(k<j){
+            int sum=nums[i]+nums[k]+nums[j];
+            if(sum==0){
+                ans.push_back({nums[i],nums[k],nums[j]});
+                k++;
+                j--;
+                while(k<j && nums[k]==nums[k-1]){
+                    k++;
                 }
-                else if(sum > 0){
-                    end--;
-                    
-                }else{
-                    str++;
+                while(k<j && nums[j]==nums[j+1]){
+                    j--;
                 }
             }
-        }return ans;
+            else if(sum<0){
+                k++;
+                
+            }
+            else{
+                j--;
+            }
+            }
+        }
+        return ans;
     }
 };
+// [-4,-1,-1,0,1,2]
