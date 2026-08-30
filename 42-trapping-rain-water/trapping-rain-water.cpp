@@ -1,6 +1,7 @@
 class Solution {
 public:
     int trap(vector<int>& nums) {
+
         int n = nums.size();
         int ans = 0;
 
@@ -8,7 +9,7 @@ public:
 
         while (i < n - 1) {
 
-            // Your condition: skip zero as a left boundary
+            // Agar left tower 0 hai to skip
             if (nums[i] == 0) {
                 i++;
                 continue;
@@ -16,35 +17,61 @@ public:
 
             int j = i + 1;
 
-            // Search for a tower >= nums[i]
+            // Right side mein suitable boundary dhoondo
             while (j < n && nums[j] < nums[i]) {
                 j++;
             }
 
-            // If no equal or taller tower exists,
-            // find the tallest tower on the right
-            if (j == n) {
+            // Agar equal ya greater boundary mil gayi
+            if (j < n) {
 
-                j = i + 1;
+                int waterLevel = min(nums[i], nums[j]);
 
-                for (int k = i + 1; k < n; k++) {
-                    if (nums[k] > nums[j]) {
-                        j = k;
+                // Beech ke towers check karo
+                for (int k = i + 1; k < j; k++) {
+
+                    int water = waterLevel - nums[k];
+
+                    if (water > 0) {
+                        ans += water;
                     }
                 }
+
+                // Ab right boundary new left boundary banegi
+                i = j;
             }
 
-            // Calculate water between i and j
-            int waterLevel = min(nums[i], nums[j]);
+            // Agar equal/greater boundary nahi mili
+            else {
 
-            for (int k = i + 1; k < j; k++) {
-                if (waterLevel > nums[k]) {
-                    ans += waterLevel - nums[k];
+                // Right side ka maximum tower dhoondo
+                int maxIndex = i + 1;
+
+                for (int k = i + 1; k < n; k++) {
+                    if (nums[k] > nums[maxIndex]) {
+                        maxIndex = k;
+                    }
                 }
-            }
 
-            // Move to the right boundary
-            i = j;
+                // Agar koi valid boundary nahi hai
+                if (nums[maxIndex] == 0) {
+                    break;
+                }
+
+                int waterLevel = min(nums[i], nums[maxIndex]);
+
+                // Water calculate karo
+                for (int k = i + 1; k < maxIndex; k++) {
+
+                    int water = waterLevel - nums[k];
+
+                    if (water > 0) {
+                        ans += water;
+                    }
+                }
+
+                i = maxIndex;
+            }
         }
 
         return ans;
