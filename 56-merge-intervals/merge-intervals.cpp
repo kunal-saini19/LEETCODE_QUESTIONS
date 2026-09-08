@@ -15,7 +15,6 @@ public:
         for(int i=1;i<temp.size();i++){
             if(end>=temp[i].first){
                 end=max(end,temp[i].second);
-                continue;
             }
             else{
                 ans.push_back({start,end});
