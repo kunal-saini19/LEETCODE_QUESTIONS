@@ -1,17 +1,13 @@
 class Solution {
 public:
     long long countCommas(long long n) {
-        long long totalCommas = 0;
-    long long threshold = 1000;
-
-    while (n >= threshold) {
-        totalCommas += (n - threshold + 1);
-        
-        // Prevent 64-bit overflow if multiplying by 1000
-        if (threshold > LLONG_MAX / 1000) break;
-        threshold *= 1000;
-    }
-
-    return totalCommas;
+    long long ans=0;
+        if(n>999) ans+=(n-999);
+        // if(n>100000) ans+=(n-999);
+        if(n>999999) ans+=(n-999999);
+        if(n>999999999LL) ans+=(n-999999999LL);
+        if(n>999999999999LL) ans+=(n-999999999999LL);
+        if (n > 999999999999999LL)    ans += (n - 999999999999999LL);
+        return ans;
     }
 };
